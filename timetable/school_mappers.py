@@ -28,8 +28,7 @@ _school_attrs = [
     'ampm',
     'full_academic_year_registration',
     'single_access',
-    'final_exams parsers',
-    'registrar'
+    'final_exams parsers'
 ]
 
 School = namedtuple(
@@ -57,8 +56,7 @@ def load_school(school):
                   full_academic_year_registration=config.full_academic_year_registration,
                   single_access=config.single_access,
                   final_exams=config.get('final_exams'),
-                  parsers=load_parsers(school),
-                  registrar=config.get('registrar'))
+                  parsers=load_parsers(school))
 
 
 def load_parsers(school):

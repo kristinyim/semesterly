@@ -103,7 +103,6 @@ class FeatureFlowView(ValidateSubdomainMixin, APIView):
             'examSupportedSemesters': map(all_semesters.index,
                                           final_exams),
             'timeUpdatedTos': Agreement.objects.latest().last_updated.isoformat(),
-            'registrar': SCHOOLS_MAP[self.school].registrar,
 
             'featureFlow': dict(feature_flow, name=self.feature_name)
         }

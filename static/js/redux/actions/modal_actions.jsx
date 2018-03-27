@@ -91,7 +91,7 @@ export const togglePreferenceModal = () => ({ type: ActionTypes.TOGGLE_PREFERENC
 
 export const triggerSaveCalendarModal = () => ({ type: ActionTypes.TRIGGER_SAVE_CALENDAR_MODAL });
 
-export const toggleSaveCalendarModal = () => ({ type: ActionTypes.TOGGLE_SAVE_CALENDAR_MODAL });
+export const toggleSaveCalendarModal = () => ({ type: ActionTypes.TRIGGER_SAVE_CALENDAR_MODAL });
 
 export const openSignUpModal = () => ({ type: ActionTypes.TOGGLE_SIGNUP_MODAL });
 
@@ -117,10 +117,6 @@ export const togglePeerModal = () => ({ type: ActionTypes.TOGGLE_PEER_MODAL });
 export const triggerTextbookModal = () => ({ type: ActionTypes.TRIGGER_TEXTBOOK_MODAL });
 
 export const showFinalExamsModal = () => ({ type: ActionTypes.SHOW_FINAL_EXAMS_MODAL });
-
-export const triggerAddAdvisorModal = () => ({ type: ActionTypes.TRIGGER_ADD_ADVISOR_MODAL });
-
-export const hideAddAdvisorModal = () => ({ type: ActionTypes.HIDE_ADD_ADVISOR_MODAL });
 
 export const overrideSettingsShow = data => ({
   type: ActionTypes.OVERRIDE_SETTINGS_SHOW,
