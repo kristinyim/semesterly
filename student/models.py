@@ -23,6 +23,7 @@ from oauth2client.client import GoogleCredentials
 
 from timetable import models as timetable_models
 from semesterly.settings import get_secret
+from django.contrib.postgres.fields import ArrayField
 
 hashids = Hashids(salt=get_secret('HASHING_SALT'))
 
@@ -131,6 +132,7 @@ class PersonalTimetable(timetable_models.Timetable):
     """
     name = models.CharField(max_length=100)
     student = models.ForeignKey(Student)
+    advisors = models.ManyToManyField(Student, related_name="Advisors")
     last_updated = models.DateTimeField(auto_now=True)
     events = models.ManyToManyField(PersonalEvent)
     has_conflict = models.BooleanField(blank=True, default=False)

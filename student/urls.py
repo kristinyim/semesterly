@@ -38,3 +38,4 @@ urlpatterns = patterns('',
                        # for accepting TOS.
                        url(r'^tos/accept/', 'student.views.accept_tos'),
                        )
+

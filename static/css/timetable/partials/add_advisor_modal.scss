@@ -1,0 +1,24 @@
+.abnb-modal {
+  height: 465px;
+  max-width: 450px;
+  overflow: auto;
+
+  > div {
+    outline: none;
+  }
+
+  .modal-header {
+    background-color: $geee;
+    border-bottom: 1px solid $gddd;
+    padding: 25px;
+    position: relative;
+  }
+}
+
+.add-advisor-modal__container {
+  padding: 50px 30px 30px;
+}
+
+.add-advisor-header-icon {
+  font-size: 5em;
+}
