@@ -37,7 +37,7 @@ class AddAdvisorView(APIView):
 
             if student:
                 if student.user.email == advisor_email:
-                    return Response({'reason': 'cannot add yourself', 'advisors_added': []}, status=404)
+                    return Response({'reason': 'Cannot add yourself', 'advisors_added': []}, status=404)
 
             output = []
             advisors_list = list(User.objects.filter(email=advisor_email))
@@ -45,14 +45,13 @@ class AddAdvisorView(APIView):
                 timetable = PersonalTimetable.objects.get(student=student, pk=tt_id, school=school, semester=semester)
                 if timetable:
                     advisor_obj = Student.objects.get(user=advisor)
-                    existing_advisors = timetable.advisors.all()
-                    if advisor_obj in existing_advisors:
-                        return Response({'reason': 'advisor already exists', 'advisors_added:': []}, status=404)
+                    if advisor_obj in timetable.advisors.all():
+                        return Response({'reason': 'Advisor already exists', 'advisors_added:': []}, status=404)
                     timetable.advisors.add(advisor_obj)
                     output.append(get_student_dict(school, advisor_obj, semester))
             return Response({'advisors_added': output}, status=200)
         except KeyError:
-            return Response({'reason': 'incorrect request format', 'advisors_added': []}, status=404)
+            return Response({'reason': 'Incorrect request format', 'advisors_added': []}, status=404)
 
 
 class AdvisorView(APIView):
@@ -97,13 +96,12 @@ class AdvisorView(APIView):
             removed = []
             # account for multiple student emails for same account
             for student in student_list:
-                timetables = PersonalTimetable.objects.filter(
+                tt = PersonalTimetable.objects.get(
                     student=student, name=tt_name, school=school, semester=semester)
 
-                for tt in timetables:
-                    if advisor in tt.advisors.all():
-                        tt.advisors.remove(advisor)
-                        removed.append(tt)
+                if advisor in tt.advisors.all():
+                    tt.advisors.remove(advisor)
+                    removed.append(tt)
 
             return Response({'timetables': DisplayTimetableSerializer.from_model(removed, many=True).data},
                             status=200)

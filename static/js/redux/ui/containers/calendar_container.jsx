@@ -38,6 +38,9 @@ const mapStateToProps = (state) => {
     isFetchingShareLink,
     shareLink,
     shareLinkValid,
+    activeUser: state.timetables.items[0].user !== undefined ?
+      state.timetables.items[0].user.first_name + ' ' + state.timetables.items[0].user.last_name
+      : '',
     active: state.timetables.active,
     uses12HrTime: state.ui.uses12HrTime,
     registrarSupported: state.registrar.supported,

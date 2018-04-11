@@ -318,7 +318,7 @@ class Calendar extends React.Component {
         </ReactTooltip>
       </div>
         );
-    const toolBar = true ? (
+    const toolBar = this.props.activeUser === '' ? (
       <div className="fc-toolbar no-print">
         <div className="fc-left">
           <PaginationContainer />
@@ -335,26 +335,19 @@ class Calendar extends React.Component {
         </div>
         <div className="fc-center" />
         <div className="fc-clear" />
-
       </div>
     ) : (
-      <div className="fc-center">
-        <p>changes in this session will not be saved</p>
+      <div className="fc-toolbar no-print">
+        <div className="fc-center">
+          <PaginationContainer />
+          <p>Currently viewing { this.props.activeUser }'s schedule.</p>
+          <p>Changes in this session will not be saved.</p>
+        </div>
       </div>
-    );
+        );
     return (
       <div className="calendar fc fc-ltr fc-unthemed week-calendar">
-        <div className="fc-toolbar no-print">
-          <div className="fc-left">
-            <PaginationContainer />
-          </div>
-          <div className="fc-right">
-            {toolBar}
-          </div>
-          <div className="fc-center" />
-          <div className="fc-clear" />
-
-        </div>
+        {toolBar}
         <div className="fc-view-container" style={{ position: 'relative' }}>
 
           <div className="fc-view fc-settimana-view fc-agenda-view">
@@ -467,6 +460,7 @@ Calendar.propTypes = {
   uses12HrTime: PropTypes.bool.isRequired,
   registrarSupported: PropTypes.bool.isRequired,
   triggerAddAdvisorModal: PropTypes.func.isRequired,
+  activeUser: PropTypes.string.isRequired,
 };
 
 export default Calendar;
