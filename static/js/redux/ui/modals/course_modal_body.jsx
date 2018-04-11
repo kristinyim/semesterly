@@ -202,7 +202,7 @@ class CourseModalBody extends React.Component {
             getShareLinkFromModal={this.props.getShareLinkFromModal}
           />);
         }
-        return <span className="textItem" key={t}>{t}</span>;
+        return <span className="textItem" key={i + ': ' + t}>{t}</span>;
       });
     const prerequisitesDisplay =
             (<div className="modal-module prerequisites">
