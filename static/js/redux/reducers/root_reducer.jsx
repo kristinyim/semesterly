@@ -47,9 +47,11 @@ import finalExamsModal from './final_exams_modal_reducer';
 import registrar from './registrar_reducer';
 import entities, * as fromEntities from './entities_reducer';
 import addAdvisorModal from './add_advisor_modal_reducer';
+import advisor from './advisor_reducer';
 
 const rootReducer = combineReducers({
   addAdvisorModal,
+  advisor,
   alerts,
   calendar,
   classmates,

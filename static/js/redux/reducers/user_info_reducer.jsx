@@ -22,7 +22,7 @@ export const initialState = {
   isVisible: false,
   saving: false,
   isFetching: false,
-  advisingTimetables: [],
+  // advisingTimetables: [],
 };
 
 const userInfo = (state = initialState, action) => {
@@ -52,10 +52,10 @@ const userInfo = (state = initialState, action) => {
       return Object.assign({}, state, { isVisible: true });
     case ActionTypes.SET_SETTINGS_MODAL_HIDDEN:
       return Object.assign({}, state, { isVisible: false });
-    case ActionTypes.GET_ADVISING_TIMETABLES:
-      return Object.assign({}, state, { isFetching: true });
-    case ActionTypes.RECEIVE_ADVISING_TIMETABLES:
-      return Object.assign({}, state, { advisingTimetables: action.timetables, isFetching: false });
+    // case ActionTypes.GET_ADVISING_TIMETABLES:
+    //   return Object.assign({}, state, { isFetching: true });
+    // case ActionTypes.RECEIVE_ADVISING_TIMETABLES:
+    //   return Object.assign({}, state, { advisingTimetables: action.timetables, isFetching: false });
     default:
       return state;
   }
