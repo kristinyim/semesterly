@@ -20,7 +20,12 @@ import {
   getActiveTimetableCourses,
   getCurrentSemester,
   getDenormTimetable } from '../reducers/root_reducer';
-import { getTimetablesEndpoint, getAdvisingTimetablesEndpoint, addCommentEndpoint } from '../constants/endpoints';
+import {
+  getTimetablesEndpoint,
+  getAdvisingTimetablesEndpoint,
+  addCommentEndpoint,
+  getCommentEndpoint
+} from '../constants/endpoints';
 import {
     browserSupportsLocalStorage,
     generateCustomEventId,
@@ -497,9 +502,25 @@ export const fetchAdvisingTimetables = () => (dispatch, getState) => {
     });
 };
 
+export const getComment = () => (dispatch, getState) => {
+  const state = getState();
+  const timetable = state.timetables.items[0].id;
+  const email = state.userInfo.data.email;
+  fetch(getCommentEndpoint(getCurrentSemester(state), timetable, email), {
+    headers: {
+      'X-CSRFToken': Cookie.get('csrftoken'),
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then(response => response.json())
+    .then((json) => console.log(json));
+};
+
 export const addComment = content => (dispatch, getState) => {
   const state = getState();
-  console.log(state);
   fetch(addCommentEndpoint(), {
     headers: {
       'X-CSRFToken': Cookie.get('csrftoken'),
@@ -516,7 +537,10 @@ export const addComment = content => (dispatch, getState) => {
     }),
   })
     .then(response => response.json())
-    .then((json) => console.log(json));
+    .then((json) => console.log(json))
+    .then(() => {
+      dispatch(getComment());
+    });
 };
 
 export const toggleConflicts = () => ({ type: ActionTypes.TOGGLE_CONFLICTS });

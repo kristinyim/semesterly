@@ -15,19 +15,20 @@ from helpers.decorators import validate_subdomain
 from comments.serializers import CommentSerializer
 
 class CommentView(APIView):
-    def get(self, request, sem_name, sem_year, tt_id ):
+    def get(self, request, sem_name, sem_year, tt_id, student_email):
         try:
             sem, _ = Semester.objects.get_or_create(name=sem_name, year=sem_year)
-            student = Student.objects.get(user=request.user)
-            timetable = student.personaltimetable_set.filter(
+
+            student = get_student(request)
+            timetable = PersonalTimetable.objects.get(student=student,
                      school=request.subdomain, semester=sem, pk=tt_id)
 
-            tt_commments = timetable.comments.all()
+            tt_comments = timetable.comments.all()
             comments = []
             for comment in tt_comments:
                 comments.append(comment)
-            return Response({'comments': comments}, status=200)
-        except:
+            return Response({'comments': CommentSerializer(comments, many=True).data}, status=200)
+        except KeyError:
             return Response({'reason': 'unknown tbh', 'comments': []}, status=404)
 
     def post(self, request):
