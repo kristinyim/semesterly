@@ -504,9 +504,8 @@ export const fetchAdvisingTimetables = () => (dispatch, getState) => {
 
 export const getComment = () => (dispatch, getState) => {
   const state = getState();
-  const timetable = state.timetables.items[0].id;
-  const email = state.userInfo.data.email;
-  fetch(getCommentEndpoint(getCurrentSemester(state), timetable, email), {
+  const ttId = state.timetables.items[0].id;
+  fetch(getCommentEndpoint(ttId), {
     headers: {
       'X-CSRFToken': Cookie.get('csrftoken'),
       Accept: 'application/json',
@@ -535,8 +534,6 @@ export const addComment = content => (dispatch, getState) => {
     method: 'POST',
     credentials: 'include',
     body: JSON.stringify({
-      sem_name: getCurrentSemester(state).name,
-      sem_year: getCurrentSemester(state).year,
       tt_id: state.timetables.items[0].id,
       comment_str: content,
     }),
