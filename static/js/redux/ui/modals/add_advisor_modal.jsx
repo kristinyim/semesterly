@@ -36,10 +36,10 @@ class AddAdvisorModal extends React.Component {
         this.startSearch();
       }
     });
-    this.props.fetchAdvisorListLink();
   }
 
   componentDidMount() {
+    this.props.fetchAdvisorListLink();
     if (this.props.isVisible) {
       this.modal.show();
     }
@@ -48,7 +48,6 @@ class AddAdvisorModal extends React.Component {
   componentDidUpdate() {
     if (this.props.isVisible) {
       this.modal.show();
-      this.props.fetchAdvisorListLink();
     }
   }
 
@@ -71,6 +70,7 @@ class AddAdvisorModal extends React.Component {
     } else if (this.props.data.advisors_added.length > 0) {
       this.state.advisor = this.props.data.advisors_added[0];
       this.state.result = `${this.state.advisor.userFirstName} ${this.state.advisor.userLastName} is now an advisor to your timetable`;
+      this.props.fetchAdvisorListLink();
     } else {
       this.state.result = this.props.data.reason === undefined ? 'Please enter valid email' : this.props.data.reason;
     }
@@ -156,6 +156,7 @@ AddAdvisorModal.propTypes = {
   hideAddAdvisorModal: PropTypes.func.isRequired,
   isVisible: PropTypes.bool.isRequired,
   fetchAdvisorLink: PropTypes.func.isRequired,
+  fetchAdvisorListLink: PropTypes.func.isRequired,
 };
 
 export default AddAdvisorModal;

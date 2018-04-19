@@ -124,7 +124,6 @@ class SideBar extends React.Component {
       </div>
       </div>
     );
-    console.log(this.props.comments);
     const comments = this.props.comments.length > 0 ? this.props.comments.map((c) => {
       return (<Comment
         key={c.last_updated + c.message}
