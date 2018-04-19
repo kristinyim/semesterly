@@ -21,7 +21,7 @@ export const initialState = {
   items: [{ slots: [], has_conflict: false }],
   hovered: null,
   active: 0,
-  comments: null,
+  comments: [],
   loadingCachedTT: true,
   lastSlotAdded: null, // either int (course id), object (custom slots state), or null
 };
@@ -52,6 +52,7 @@ const timetables = (state = initialState, action) => {
         items: actionTimetables,
         hovered: null,
         active: 0,
+        comments: [],
       };
     }
 
@@ -75,7 +76,6 @@ const timetables = (state = initialState, action) => {
       return Object.assign({}, state, { lastSlotAdded: action.course });
 
     case ActionTypes.UPDATE_COMMENTS:
-      console.log(action.commentsList);
       return Object.assign({}, state, { comments: action.commentsList });
 
     default:

@@ -21,10 +21,7 @@ const addAdvisorModal = (state = {
 }, action) => {
   switch (action.type) {
     case ActionTypes.TRIGGER_ADD_ADVISOR_MODAL:
-      return {
-        isVisible: true,
-        data: '',
-      };
+      return Object.assign({}, state, { isVisible: true, data: '' });
     case ActionTypes.HIDE_ADD_ADVISOR_MODAL:
       return Object.assign({}, state, { isVisible: false });
     case ActionTypes.SEND_ADVISOR_DATA:
