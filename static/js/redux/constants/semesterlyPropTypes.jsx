@@ -203,3 +203,10 @@ export const peer = PropTypes.shape({
   profile_url: PropTypes.string.isRequired,
   shared_courses: PropTypes.arrayOf(relatedCourse).isRequired,
 });
+
+export const comment = PropTypes.shape({
+  last_updated: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
+  ownerFirstName: PropTypes.string.isRequired,
+  ownerLastName: PropTypes.string.isRequired,
+});

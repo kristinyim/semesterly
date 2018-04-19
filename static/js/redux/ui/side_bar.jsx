@@ -25,6 +25,7 @@ import Textbook from './textbook';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 import { getNextAvailableColour } from '../util';
 import { getTextbooksFromCourse } from '../reducers/entities_reducer';
+import Comment from './comment';
 
 class SideBar extends React.Component {
   constructor(props) {
@@ -111,7 +112,7 @@ class SideBar extends React.Component {
           getShareLink={this.props.getShareLink}
         />);
       }) : null;
-    const comments = (
+    const addComments = (
       <div className="comment-slot">
       <div className="comment-content">
       <input
@@ -123,6 +124,15 @@ class SideBar extends React.Component {
       </div>
       </div>
     );
+    console.log(this.props.comments);
+    const comments = this.props.comments.length > 0 ? this.props.comments.map((c) => {
+      return (<Comment
+        key={c.last_updated + c.message}
+        content={c.message}
+        writer={c.ownerFirstName}
+        date={c.last_updated}
+      />);
+    }) : null;
     let optionalSlots = this.props.coursesInTimetable ? this.props.optionalCourses.map((course) => {
       const colourIndex = (course.id in this.props.courseToColourIndex) ?
           this.props.courseToColourIndex[course.id] :
@@ -240,6 +250,7 @@ class SideBar extends React.Component {
         </a>
         <div className="side-bar-section">
           { comments }
+          { addComments }
         </div>
       </div>
     );
@@ -285,6 +296,7 @@ SideBar.propTypes = {
   hasLoaded: PropTypes.bool.isRequired,
   getShareLink: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
+  comments: PropTypes.arrayOf(SemesterlyPropTypes.comment).isRequired,
 };
 
 export default SideBar;
