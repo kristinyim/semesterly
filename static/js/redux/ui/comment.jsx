@@ -14,8 +14,6 @@ GNU General Public License for more details.
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import COLOUR_DATA from '../constants/colours';
-import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 // import ClickOutHandler from 'react-onclickout';
 // import uniq from 'lodash/uniq';
 // import Clipboard from 'clipboard';
@@ -27,7 +25,7 @@ class Comment extends React.Component {
   render() {
     const commentContent = (
       <div className="comment-content">
-        <h3>{ this.prop.content }</h3>
+        <h3>{ this.props.content }</h3>
       </div>
     )
     const profilePic = (
@@ -36,7 +34,7 @@ class Comment extends React.Component {
         style={{backgroundImage: 'url(https://lh6.googleusercontent.com/-iqNXPUCvgTk/AAAAAAAAAAI/AAAAAAAAAIU/IMUYG8om_Y4/photo.jpg?sz=50)', margin: '5px', zIndex: '2' }}
       />
     )
-    const commentData = (this.state.content === '') ? null : (
+    const commentData = (
       <div className="comment-user-data">
         <h4>{ profilePic }</h4>
         <h2>{ this.props.writer }<br/> {this.props.date}</h2>

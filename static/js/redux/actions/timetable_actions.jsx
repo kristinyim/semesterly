@@ -516,7 +516,12 @@ export const getComment = () => (dispatch, getState) => {
     credentials: 'include',
   })
     .then(response => response.json())
-    .then((json) => console.log(json));
+    .then((json) => {
+      dispatch({
+        type: ActionTypes.UPDATE_COMMENTS,
+        commentsList: json.comments,
+      });
+    });
 };
 
 export const addComment = content => (dispatch, getState) => {
@@ -537,7 +542,6 @@ export const addComment = content => (dispatch, getState) => {
     }),
   })
     .then(response => response.json())
-    .then((json) => console.log(json))
     .then(() => {
       dispatch(getComment());
     });

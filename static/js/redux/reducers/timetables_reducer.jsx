@@ -21,9 +21,9 @@ export const initialState = {
   items: [{ slots: [], has_conflict: false }],
   hovered: null,
   active: 0,
+  comments: null,
   loadingCachedTT: true,
   lastSlotAdded: null, // either int (course id), object (custom slots state), or null
-  comments: null,
 };
 
 const timetables = (state = initialState, action) => {
@@ -75,7 +75,8 @@ const timetables = (state = initialState, action) => {
       return Object.assign({}, state, { lastSlotAdded: action.course });
 
     case ActionTypes.UPDATE_COMMENTS:
-      return Object.assign({}, state);
+      console.log(action.commentsList);
+      return Object.assign({}, state, { comments: action.commentsList });
 
     default:
       return state;
