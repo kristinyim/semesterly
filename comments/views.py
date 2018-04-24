@@ -30,7 +30,7 @@ class CommentView(APIView):
             owner = get_student(request)
             # REMEBER YOU WILL NEED TO CHANGE student=owner FOR WHEN ADVISORS CAN COMMENT ON TT's!!
             tt = PersonalTimetable.objects.get(pk=tt_id, school=request.subdomain)
-            comment = Comment.create(message=comment_str, owner=owner.user)
+            comment = Comment.create(message=comment_str, owner=owner.user, img_url=owner.img_url)
             comment.save()
             tt.comments.add(comment)
             return Response({'comment_added': CommentSerializer(comment).data}, status=200)
