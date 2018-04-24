@@ -135,6 +135,48 @@ export const fetchStateTimetables = (activeIndex = 0) => (dispatch, getState) =>
   dispatch(fetchTimetables(requestBody, false, activeIndex));
 };
 
+export const getComment = () => (dispatch, getState) => {
+  const state = getState();
+  const ttId = state.timetables.items[0].id;
+  fetch(getCommentEndpoint(ttId), {
+    headers: {
+      'X-CSRFToken': Cookie.get('csrftoken'),
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then(response => response.json())
+    .then((json) => {
+      dispatch({
+        type: ActionTypes.UPDATE_COMMENTS,
+        commentsList: json.comments,
+      });
+    });
+};
+
+export const addComment = content => (dispatch, getState) => {
+  const state = getState();
+  fetch(addCommentEndpoint(), {
+    headers: {
+      'X-CSRFToken': Cookie.get('csrftoken'),
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    credentials: 'include',
+    body: JSON.stringify({
+      tt_id: state.timetables.items[0].id,
+      comment_str: content,
+    }),
+  })
+    .then(response => response.json())
+    .then(() => {
+      dispatch(getComment());
+    });
+};
+
 // load a single timetable into the calendar and lock all of its sections (used for personal and
 // shared timetables)
 // accepts a normalized timetable as input
@@ -150,6 +192,7 @@ export const lockTimetable = timetable => (dispatch, getState) => {
     courseSections: lockActiveSections(getDenormTimetable(state, timetable)),
   });
   dispatch(receiveTimetables([timetable]));
+  dispatch(getComment());
   if (state.userInfo.data.isLoggedIn) {
     dispatch(fetchClassmates(timetable));
   }
@@ -499,51 +542,6 @@ export const fetchAdvisingTimetables = () => (dispatch, getState) => {
         type: ActionTypes.RECEIVE_ADVISING_TIMETABLES,
         timetables,
       });
-    });
-};
-
-export const getComment = () => (dispatch, getState) => {
-  const state = getState();
-  const timetable = state.timetables.items[0].id;
-  const email = state.userInfo.data.email;
-  fetch(getCommentEndpoint(getCurrentSemester(state), timetable, email), {
-    headers: {
-      'X-CSRFToken': Cookie.get('csrftoken'),
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    method: 'GET',
-    credentials: 'include',
-  })
-    .then(response => response.json())
-    .then((json) => {
-      dispatch({
-        type: ActionTypes.UPDATE_COMMENTS,
-        commentsList: json.comments,
-      });
-    });
-};
-
-export const addComment = content => (dispatch, getState) => {
-  const state = getState();
-  fetch(addCommentEndpoint(), {
-    headers: {
-      'X-CSRFToken': Cookie.get('csrftoken'),
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    method: 'POST',
-    credentials: 'include',
-    body: JSON.stringify({
-      sem_name: getCurrentSemester(state).name,
-      sem_year: getCurrentSemester(state).year,
-      tt_id: state.timetables.items[0].id,
-      comment_str: content,
-    }),
-  })
-    .then(response => response.json())
-    .then(() => {
-      dispatch(getComment());
     });
 };
 
