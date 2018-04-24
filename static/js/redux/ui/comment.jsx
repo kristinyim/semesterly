@@ -17,23 +17,16 @@ import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 import React from 'react';
 
 class Comment extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     writer: this.props.user.first_name + ' ' + this.props.user.last_name,
-  //     imagURL: this.props.user.image_url,
-  //   };
-  // }
   render() {
     const commentContent = (
       <div className="comment-content">
         <h3>{ this.props.content }</h3>
       </div>
     );
-    const profilePic = (
+    const profilePic = (this.props.imageURL === '-1') ? null : (
       <div
         className="social-pro-pic"
-        style={{backgroundImage: 'url(https://lh6.googleusercontent.com/-iqNXPUCvgTk/AAAAAAAAAAI/AAAAAAAAAIU/IMUYG8om_Y4/photo.jpg?sz=50)', margin: '5px', zIndex: '2' }}
+        style={{backgroundImage: `url(${this.props.imageURL})`, margin: '5px', zIndex: '2' }}
       />
     );
     const commentData = (
@@ -56,13 +49,15 @@ Comment.defaultProps = {
   writer: null,
   slots: null,
   date: null,
+  imageURL: null,
 };
 
 Comment.propTypes = {
   content: PropTypes.string,
   writer: PropTypes.string,
   date: PropTypes.string,
-  schoolSpecificInfo: SemesterlyPropTypes.schoolSpecificInfo.isRequired,
+  imageURL: PropTypes.string,
+  // schoolSpecificInfo: SemesterlyPropTypes.schoolSpecificInfo.isRequired,
 };
 
 export default Comment;

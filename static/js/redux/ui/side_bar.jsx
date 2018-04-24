@@ -130,6 +130,7 @@ class SideBar extends React.Component {
         content={c.message}
         writer={c.ownerFirstName}
         date={c.last_updated}
+        imageURL={c.image_url}
       />);
     }) : null;
     let optionalSlots = this.props.coursesInTimetable ? this.props.optionalCourses.map((course) => {

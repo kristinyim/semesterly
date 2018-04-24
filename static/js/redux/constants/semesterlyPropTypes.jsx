@@ -204,14 +204,10 @@ export const peer = PropTypes.shape({
   shared_courses: PropTypes.arrayOf(relatedCourse).isRequired,
 });
 
-export const commentUser = PropTypes.shape({
-  fullName: PropTypes.string.isRequired,
-  img_url: PropTypes.string.isRequired,
-});
-
 export const comment = PropTypes.shape({
   last_updated: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
   ownerFirstName: PropTypes.string.isRequired,
   ownerLastName: PropTypes.string.isRequired,
+  image_url: PropTypes.string.isRequired,
 });
