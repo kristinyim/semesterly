@@ -242,11 +242,7 @@ class SideBar extends React.Component {
         { optionalSlotsHeader }
         { optionalSlots }
         <div id="sb-optional-slots" />
-        <a onClick={this.props.launchTextbookModal}>
-          <h4 className="sb-header"> Comments
-            <div className="sb-header-link"><i className="fa fa-external-link" />&nbsp;See all</div>
-          </h4>
-        </a>
+        <h4 className="sb-header"> Comments</h4>
         <div className="side-bar-section">
           { comments }
           { addComments }
