@@ -18,6 +18,7 @@ class CommentSerializer(serializers.ModelSerializer):
     message = serializers.CharField()
     ownerFirstName = serializers.CharField(source='owner.first_name')
     ownerLastName = serializers.CharField(source='owner.last_name')
+    image_url = serializers.CharField()
     last_updated = serializers.DateTimeField()
     class Meta:
             model = Comment
@@ -26,4 +27,5 @@ class CommentSerializer(serializers.ModelSerializer):
                 'ownerFirstName',
                 'ownerLastName',
                 'last_updated',
+                'image_url',
             )
