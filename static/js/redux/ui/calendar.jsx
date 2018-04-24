@@ -340,7 +340,7 @@ class Calendar extends React.Component {
       <div className="fc-toolbar no-print">
         <div className="fc-center">
           <PaginationContainer />
-          <p>Viewing { this.props.userName }'s schedule</p>
+          <p>Viewing { this.props.userName }'s schedule { this.props.lastUpdated }</p>
           <p>Changes in this session will not be saved</p>
         </div>
         <div className="fc-right">
@@ -467,6 +467,7 @@ Calendar.propTypes = {
   registrarSupported: PropTypes.bool.isRequired,
   triggerAddAdvisorModal: PropTypes.func.isRequired,
   userName: PropTypes.string.isRequired,
+  lastUpdated: PropTypes.string.isRequired,
 };
 
 export default Calendar;
