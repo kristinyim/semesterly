@@ -318,6 +318,8 @@ class Calendar extends React.Component {
         </ReactTooltip>
       </div>
         );
+    const parsedDate = new Date(this.props.lastUpdated).toDateString();
+    const parsedTime = new Date(this.props.lastUpdated).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
     const toolBar = this.props.userName === '' ? (
       <div className="fc-toolbar no-print">
         <div className="fc-left">
@@ -340,8 +342,7 @@ class Calendar extends React.Component {
       <div className="fc-toolbar no-print">
         <div className="fc-center">
           <PaginationContainer />
-          <p>Viewing { this.props.userName }'s schedule { this.props.lastUpdated }</p>
-          <p>Changes in this session will not be saved</p>
+          <p style={{ fontSize: '15px' }}>Viewing { this.props.userName }'s schedule. Last updated on { parsedDate } at { parsedTime }. Changes in this session will not be saved</p>
         </div>
         <div className="fc-right">
           { addButton }
