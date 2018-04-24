@@ -538,6 +538,7 @@ export const fetchAdvisingTimetables = () => (dispatch, getState) => {
     .then((json) => {
       const { timetables, courses } = json;
       dispatch(receiveCourses(courses));
+      console.log(json);
       dispatch({
         type: ActionTypes.RECEIVE_ADVISING_TIMETABLES,
         timetables,
