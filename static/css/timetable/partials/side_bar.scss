@@ -385,14 +385,15 @@
 }
 
 .comment-slot {
-  background-color: #e6e6e6;
+  background-color: #fafafa;
   border-radius: 5px;
   color: $gfff;
   cursor: pointer;
   margin-bottom: 5px;
   padding: 5px 5px 5px 10px;
   position: relative;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid $gd9d9d9;
   transition: color .3s, background-color .3s;
 
   &.optional {
@@ -400,7 +401,7 @@
   }
   input {
     border: 0px solid $gfff;
-    background-color: #e6e6e6;
+    background-color: #fafafa;
     font-family: $font-body;
     font-size: 15px;
     font-weight: 700;
@@ -414,15 +415,14 @@
 
 .comment-content {
   padding: 5px;
+
   h3 {
     color: $g222;
     font-size: 14px;
     font-weight: 400;
     margin: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
+    word-wrap: break-word;
+    text-align: justify;
 
     span {
       float: left;
