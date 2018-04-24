@@ -209,4 +209,5 @@ export const comment = PropTypes.shape({
   message: PropTypes.string.isRequired,
   ownerFirstName: PropTypes.string.isRequired,
   ownerLastName: PropTypes.string.isRequired,
+  image_url: PropTypes.string.isRequired,
 });

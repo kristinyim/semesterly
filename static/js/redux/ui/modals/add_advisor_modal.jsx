@@ -101,7 +101,7 @@ class AddAdvisorModal extends React.Component {
       <div className="advisor-card" key={advisor}>
         <div
           className="social-pro-pic"
-          style={{backgroundImage: advisor.image_url, margin: '5px', zIndex: '2' }}
+          style={{backgroundImage: `url(${advisor.image_url})`, margin: '5px', zIndex: '2' }}
         />
         <p> {advisor.userFirstName} {advisor.userLastName} - {advisor.email} </p>
       </div>
