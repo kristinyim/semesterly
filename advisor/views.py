@@ -92,6 +92,7 @@ class AdvisorView(APIView):
                 with_user = DisplayTimetableSerializer.from_model(tt).data
                 user = tt.student.user
                 with_user['user'] = {'first_name': user.first_name, 'last_name': user.last_name, 'email': user.email}
+                with_user['last_updated'] = {'last_updated': tt.last_updated}
                 for c in tt.courses.all():
                     courses.add(c)
                 tt_can_view.append(with_user)
