@@ -18,6 +18,8 @@ import React from 'react';
 
 class Comment extends React.Component {
   render() {
+    const parsedDate = new Date(this.props.date).toDateString();
+    const parsedTime = new Date(this.props.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
     const commentContent = (
       <div className="comment-content">
         <h3>{ this.props.content }</h3>
@@ -32,7 +34,7 @@ class Comment extends React.Component {
     const commentData = (
       <div className="comment-user-data">
         <h4>{ profilePic }</h4>
-        <h2>{ this.props.writer }<br/> {this.props.date}</h2>
+        <h2>{ this.props.writer }<br/>{parsedDate} at {parsedTime}</h2>
       </div>
     );
     return (<div
