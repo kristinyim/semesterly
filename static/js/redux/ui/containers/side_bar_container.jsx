@@ -56,8 +56,8 @@ const mapStateToProps = (state) => {
     isCourseInRoster: courseId => timetable.slots.some(s => s.course === courseId),
     hasLoaded: !state.timetables.isFetching,
     getShareLink: courseCode => getCourseShareLink(courseCode, getCurrentSemester(state)),
-    comments: (state.timetables.comments !== undefined && state.timetables.comments !== null) ?
-      state.timetables.comments : [],
+    comments: state.timetables.comments,
+    tt_id: state.timetables.items[0].id !== undefined ? state.timetables.items[0].id : -1,
   };
 };
 

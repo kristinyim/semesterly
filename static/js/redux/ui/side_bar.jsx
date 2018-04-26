@@ -112,16 +112,22 @@ class SideBar extends React.Component {
           getShareLink={this.props.getShareLink}
         />);
       }) : null;
-    const addComments = (
+    const addComments = (this.props.tt_id !== -1) ? (
       <div className="comment-slot">
       <div className="comment-content">
-      <input
+        <input
         ref={(c) => { this.input = c; }}
         placeholder={'Add Comment'}
         value={this.state.input}
         onInput={e => this.setState({ input: e.target.value })}
       />
       </div>
+      </div>
+    ) : (
+      <div className="comment-slot">
+        <div className="comment-content">
+          <h4>Add Comment</h4>
+        </div>
       </div>
     );
     const comments = this.props.comments.length > 0 ? this.props.comments.map((c) => {
@@ -293,6 +299,7 @@ SideBar.propTypes = {
   getShareLink: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
   comments: PropTypes.arrayOf(SemesterlyPropTypes.comment).isRequired,
+  tt_id: PropTypes.number.isRequired,
 };
 
 export default SideBar;
