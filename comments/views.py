@@ -2,11 +2,11 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.http import HttpResponse
-from student.models import Student, PersonalTimetable
+from student.models import Student, PersonalTimetable, Comment
 from student.utils import get_student, get_student_tts
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from comments.models import Comment
+#from comments.models import Comment
 from helpers.mixins import ValidateSubdomainMixin, RedirectToSignupMixin
 from helpers.decorators import validate_subdomain
 from comments.serializers import CommentSerializer

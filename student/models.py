@@ -24,7 +24,7 @@ from oauth2client.client import GoogleCredentials
 from timetable import models as timetable_models
 from semesterly.settings import get_secret
 from django.contrib.postgres.fields import ArrayField
-from comments import models as comment_models
+#from comments import models as comment_models
 
 hashids = Hashids(salt=get_secret('HASHING_SALT'))
 
@@ -124,6 +124,18 @@ class PersonalEvent(models.Model):
     time_start = models.CharField(max_length=15)
     time_end = models.CharField(max_length=15)
 
+# Create your models here.
+class Comment(models.Model):
+   """A db object representing comments made on a timetable. """
+   message = models.TextField()
+   owner = models.ForeignKey(User)
+   image_url = models.CharField(max_length=300, default=-1)
+   last_updated = models.DateTimeField(auto_now=True)
+
+   @classmethod
+   def create(cls, message, owner, img_url):
+       comment = cls(message=message, owner=owner, image_url=img_url)
+       return comment
 
 class PersonalTimetable(timetable_models.Timetable):
     """ Database object representing a timetable created (and saved) by a user.
@@ -137,7 +149,7 @@ class PersonalTimetable(timetable_models.Timetable):
     last_updated = models.DateTimeField(auto_now=True)
     events = models.ManyToManyField(PersonalEvent)
     has_conflict = models.BooleanField(blank=True, default=False)
-    comments = models.ManyToManyField(comment_models.Comment, related_name="Comments")
+    comments = models.ManyToManyField(Comment, related_name="Comments")
 
 
 class RegistrationToken(models.Model):
