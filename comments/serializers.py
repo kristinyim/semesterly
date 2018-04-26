@@ -12,7 +12,7 @@
 
 import itertools
 from rest_framework import serializers
-from comments.models import Comment
+from student.models import Comment
 
 class CommentSerializer(serializers.ModelSerializer):
     message = serializers.CharField()
