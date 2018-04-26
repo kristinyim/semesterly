@@ -20,6 +20,7 @@ import {
     createICalFromTimetable,
     fetchShareTimetableLink,
     fetchSISTimetableData,
+    fetchAdvisorListLink,
 } from '../../actions/calendar_actions';
 import {
   togglePreferenceModal,
@@ -58,6 +59,7 @@ const CalendarContainer = connect(
     fetchSISTimetableData,
     triggerAddAdvisorModal,
     hideAddAdvisorModal,
+    fetchAdvisorListLink,
   },
 )(Calendar);
 

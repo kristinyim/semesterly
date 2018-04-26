@@ -182,7 +182,11 @@ class Calendar extends React.Component {
     const addAdvisorButton = (
       <div className="cal-btn-wrapper">
         <button
-          onClick={() => this.props.triggerAddAdvisorModal()}
+          onClick={() => {
+            this.props.fetchAdvisorListLink();
+            this.props.triggerAddAdvisorModal();
+          }
+          }
           className="save-timetable"
           data-tip
           data-for="add-advisor-btn-tooltip"
@@ -469,6 +473,7 @@ Calendar.propTypes = {
   triggerAddAdvisorModal: PropTypes.func.isRequired,
   userName: PropTypes.string.isRequired,
   lastUpdated: PropTypes.string.isRequired,
+  fetchAdvisorListLink: PropTypes.func.isRequired,
 };
 
 export default Calendar;
