@@ -30,6 +30,7 @@ const ui = (state = initialState, action) => {
       return { ...state, uses12HrTime: action.data.uses12HrTime };
     case ActionTypes.HOVER_SEARCH_RESULT:
       return { ...state, searchHover: action.position };
+    case ActionTypes.RECEIVE_ADVISING_TIMETABLES:
     case ActionTypes.RECEIVE_TIMETABLES: {
       const courses = action.timetables.length > 0 ?
         getCourseIdsFromSlots(action.timetables[0].slots) : [];
