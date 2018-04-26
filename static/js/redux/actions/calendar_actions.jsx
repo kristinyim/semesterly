@@ -128,27 +128,22 @@ export const fetchAdvisorListLink = () => (dispatch, getState) => {
 
   const semester = getCurrentSemester(state);
 
-  fetch(getAdvisorEndpoint(), {
+  fetch(getAdvisorEndpoint(semester, timetableId), {
       headers: {
           'X-CSRFToken': Cookie.get('csrftoken'),
           Accept: 'application/json',
           'Content-Type': 'application/json',
       },
-      method: 'POST',
-        credentials: 'include',
-        body: JSON.stringify({
-          tt_id: timetableId,
-          sem_name: semester.name,
-          sem_year: semester.year,
-      }),
+    method: 'GET',
+      credentials: 'include',
   })
-      .then(response => response.json())
-        .then((data) => {
-            dispatch({
-                type: ActionTypes.SET_ADVISOR_LIST,
-                data,
-            });
-      });
+  .then(response => response.json())
+  .then((data) => {
+    dispatch({
+      type: ActionTypes.SET_ADVISOR_LIST,
+      data,
+    });
+  });
 };
 
 export const addTTtoGCal = () => (dispatch, getState) => {

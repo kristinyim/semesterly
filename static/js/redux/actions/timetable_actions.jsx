@@ -521,18 +521,14 @@ export const fetchAdvisingTimetables = () => (dispatch, getState) => {
   dispatch({
     type: ActionTypes.GET_ADVISING_TIMETABLES,
   });
-  fetch(getAdvisingTimetablesEndpoint(), {
+  fetch(getAdvisingTimetablesEndpoint(getCurrentSemester(state)), {
     headers: {
       'X-CSRFToken': Cookie.get('csrftoken'),
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    method: 'POST',
+    method: 'GET',
     credentials: 'include',
-    body: JSON.stringify({
-      sem_name: getCurrentSemester(state).name,
-      year: getCurrentSemester(state).year,
-    }),
   })
     .then(response => response.json())
     .then((json) => {
