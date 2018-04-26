@@ -53,16 +53,13 @@ class AddAdvisorView(APIView):
         except KeyError:
             return Response({'reason': 'Incorrect request format', 'advisors_added': []}, status=404)
 
+
 class RetrieveAdvisorView(APIView):
-    def post(self, request):
+    def get(self, request, sem_name, year, tt_id):
         """Return list of advisors who can view the current timetable. """
         try:
-            tt_id = request.data['tt_id']
-            sem_name = request.data['sem_name']
-            sem_year = request.data['sem_year']
-
             student = get_student(request)
-            semester = Semester.objects.get(name=sem_name, year=sem_year)
+            semester = Semester.objects.get(name=sem_name, year=year)
             school = request.subdomain
 
             advisors = []
@@ -76,12 +73,10 @@ class RetrieveAdvisorView(APIView):
             return Response({'reason': 'Incorrect request format', 'advisors_existing': []}, status=404)
 
 class AdvisorView(APIView):
-    def post(self, request):
+    def get(self, request, sem_name, year):
         """ Get list of timetables viewable by the authenticated user """
         student = get_student(request)
         timetables = PersonalTimetable.objects.all()
-        sem_name = request.data['sem_name']
-        year = request.data['year']
         sem, _ = Semester.objects.get_or_create(name=sem_name, year=year)
         tt_can_view = []
         courses = set()
