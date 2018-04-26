@@ -58,7 +58,7 @@ class SearchBar extends React.Component {
           $('.search-bar input').focus();
           this.setState({ focused: true });
         }
-      } else if ($('input:focus').length !== 0) {
+      } else if ($('input:focus').length !== 0 && this.state.focused) {
         const numSearchResults = this.props.searchResults.length;
         if (e.key === 'Enter' && numSearchResults > 0) {
           this.props.addCourse(this.props.searchResults[this.props.hoveredPosition].id);
