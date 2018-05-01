@@ -98,10 +98,10 @@ class AddAdvisorModal extends React.Component {
       this.endSearch();
     }
     const existingAdvisors = this.props.existingAdvisors ? this.props.existingAdvisors.advisors_existing.map((advisor) => (
-      <div className="advisor-card" key={advisor}>
+      <div className="advisor-card" key={advisor._keys}>
         <div
           className="social-pro-pic"
-          style={{backgroundImage: `url(${advisor.image_url})`, margin: '5px', zIndex: '2' }}
+          style={{backgroundImage: `url(${advisor.img_url})`, margin: '5px', zIndex: '2' }}
         />
         <p> {advisor.userFirstName} {advisor.userLastName} - {advisor.email} </p>
       </div>
