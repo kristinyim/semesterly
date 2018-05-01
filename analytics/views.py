@@ -267,3 +267,12 @@ def log_final_exam_view(request):
         school=request.subdomain
     ).save()
     return HttpResponse(json.dumps({}), content_type="application/json")
+
+@csrf_exempt
+def log_add_advisor_view(request):
+    student = get_object_or_404(Student, user=request.user)
+    AddAdvisorView.objects.create(
+        student=student,
+        school=request.subdomain
+    ).save()
+    return HttpResponse(json.dumps({}), content_type="application/json")

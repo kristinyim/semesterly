@@ -16,12 +16,13 @@ import ical from 'ical-generator';
 import Cookie from 'js-cookie';
 import FileSaver from 'browser-filesaver';
 import {
-    getAddTTtoGCalEndpoint,
-    getLogiCalEndpoint,
-    getRequestShareTimetableLinkEndpoint,
-    getCourseShareLink,
-    getAddAdvisorEndpoint,
-    getAdvisorEndpoint,
+  getAddTTtoGCalEndpoint,
+  getLogiCalEndpoint,
+  getRequestShareTimetableLinkEndpoint,
+  getCourseShareLink,
+  getAddAdvisorEndpoint,
+  getAdvisorEndpoint,
+  getLogAddAdvisorEndpoint,
 } from '../constants/endpoints';
 import { FULL_WEEK_LIST } from '../constants/constants';
 import {
@@ -91,14 +92,6 @@ export const fetchAdvisorLink = email => (dispatch, getState) => {
   const timetableId = getActiveTimetable(state).id;
 
   const semester = getCurrentSemester(state);
-  // const { shareLink, shareLinkValid } = state.calendar;
-  // dispatch({
-  //   type: ActionTypes.REQUEST_SHARE_TIMETABLE_LINK,
-  // });
-  // if (shareLinkValid) {
-  //   receiveShareLink(shareLink);
-  //   return;
-  // }
   fetch(getAddAdvisorEndpoint(), {
     headers: {
       'X-CSRFToken': Cookie.get('csrftoken'),
@@ -121,6 +114,10 @@ export const fetchAdvisorLink = email => (dispatch, getState) => {
           data,
         });
       });
+  fetch(getLogAddAdvisorEndpoint(), {
+    method: 'POST',
+    credentials: 'include',
+  });
 };
 export const fetchAdvisorListLink = () => (dispatch, getState) => {
   const state = getState();

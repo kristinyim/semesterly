@@ -18,6 +18,7 @@ export const getLogiCalEndpoint = () => '/user/log_ical/';
 export const getLogFinalExamViewEndpoint = () => '/user/log_final_exam/';
 export const getLogFacebookAlertViewEndpoint = () => '/user/log_fb_alert_view/';
 export const getLogFacebookAlertClickEndpoint = () => '/user/log_fb_alert_click/';
+export const getLogAddAdvisorEndpoint = () => '/user/log_add_advisor/';
 export const getCourseInfoEndpoint = (courseId, semester) => `/courses/${semester}/id/${courseId}/`;
 export const getCourseSearchEndpoint = (query, semester) => `/search/${semester}/${query}/`;
 export const getTimetablesEndpoint = () => '/timetables/';
