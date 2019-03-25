@@ -21,10 +21,11 @@ import {
   getCurrentSemester,
   getDenormTimetable } from '../reducers/root_reducer';
 import {
-  getTimetablesEndpoint,
-  getAdvisingTimetablesEndpoint,
-  addCommentEndpoint,
-  getCommentEndpoint
+    getTimetablesEndpoint,
+    getAdvisingTimetablesEndpoint,
+    addCommentEndpoint,
+    getCommentEndpoint,
+    getDeleteCommentEndpoint, getDeleteTimetableEndpoint
 } from '../constants/endpoints';
 import {
     browserSupportsLocalStorage,
@@ -175,6 +176,33 @@ export const addComment = content => (dispatch, getState) => {
     .then(() => {
       dispatch(getComment());
     });
+};
+
+// PUT ACTION TO DELETE COMMENT
+export const deleteComment = content => (dispatch, getState) => {
+  const state = getState();
+  console.log("action State for Del: ", state);
+  const ttId = state.timetables.items[0].id;
+  // you can get the tt_id here no need to have it in commentss
+    fetch(getDeleteCommentEndpoint(ttId), {
+        headers: {
+            'X-CSRFToken': Cookie.get('csrftoken'),
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        method: 'DELETE',
+        credentials: 'include',
+        body: JSON.stringify({
+            tt_id: state.timetables.items[0].id,
+            comment_str: content.msg,
+            comment_writer: content.writer,
+            comment_id: content.c_id,
+        }),
+    })
+        .then(response => response.json())
+        .then(() => {
+          dispatch(getComment());
+        });
 };
 
 // load a single timetable into the calendar and lock all of its sections (used for personal and

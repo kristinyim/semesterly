@@ -31,11 +31,13 @@ import {
     addOrRemoveOptionalCourse,
     loadTimetable,
     addComment,
+    deleteComment,
 } from '../../actions/timetable_actions';
 import { deleteTimetable, duplicateTimetable, deleteAdvisingTimetable } from '../../actions/user_actions';
 import { getCourseShareLink } from '../../constants/endpoints';
 
 const mapStateToProps = (state) => {
+    //console.log("SBCont State: ", state);
   const timetable = getActiveTimetable(state);
   const coursesInTimetable = getCoursesFromSlots(state, timetable.slots);
   const mandatoryCourses = getCoursesFromSlots(state, timetable.slots.filter(
@@ -76,6 +78,7 @@ const SideBarContainer = connect(
     launchFinalExamsModal: showFinalExamsModal,
     loadTimetable,
     addComment,
+    deleteComment,
   },
 )(SideBar);
 

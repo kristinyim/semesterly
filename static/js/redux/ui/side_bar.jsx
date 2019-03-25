@@ -137,6 +137,8 @@ class SideBar extends React.Component {
         writer={c.ownerFirstName}
         date={c.last_updated}
         imageURL={c.image_url}
+        deleteComment={this.props.deleteComment}
+        c_id={c.id}
       />);
     }) : null;
     let optionalSlots = this.props.coursesInTimetable ? this.props.optionalCourses.map((course) => {
@@ -298,6 +300,7 @@ SideBar.propTypes = {
   hasLoaded: PropTypes.bool.isRequired,
   getShareLink: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
+  deleteComment: PropTypes.func.isRequired,
   comments: PropTypes.arrayOf(SemesterlyPropTypes.comment).isRequired,
   tt_id: PropTypes.number.isRequired,
 };

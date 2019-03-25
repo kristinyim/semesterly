@@ -11,5 +11,5 @@ urlpatterns = patterns('',
     url(r'^comments/editComment/$', comments.views.CommentView.as_view()),
     url(r'^comments/getComments/(?P<tt_id>.+)/$',
                                comments.views.CommentView.as_view()),
-    url(r'^comments/removeComment/(?P<comment_id>.+)/$', comments.views.CommentView.as_view()),
+    url(r'^comments/removeComment/(?P<tt_id>.+)/$', comments.views.CommentView.as_view()),
 )

@@ -44,6 +44,7 @@ export const getAdvisorEndpoint = (semester, ttId) => `/advisor/getAdvisor/${sem
 export const getDeleteAdvisingTimetableEndpoint = (semester, name, email) => `/advisor/deleteAdvisor/${semester.name}/${semester.year}/${name}/${email}`;
 export const addCommentEndpoint = () => '/comments/addComment/';
 export const getCommentEndpoint = ttId => `/comments/getComments/${ttId}/`;
+export const getDeleteCommentEndpoint = ttId => `/comments/removeComment/${ttId}/`;
 export function getCourseShareLinkFromModal(code, semester) {
   return `/course/${encodeURIComponent(code)}/${semester.name}/${semester.year}`;
 }

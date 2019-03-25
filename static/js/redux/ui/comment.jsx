@@ -37,10 +37,23 @@ class Comment extends React.Component {
         <h2>{ this.props.writer }<br/>{parsedDate} at {parsedTime}</h2>
       </div>
     );
+    const delBtn = (
+        // on button click call to delete comment
+        <div className="row-button-comment">
+            <button className="row-button" onClick={()=>{
+
+              this.props.deleteComment({msg: this.props.content, writer: this.props.writer, c_id: this.props.c_id});
+            }
+            }>
+                <i className="fa fa-trash-o" />
+            </button>
+        </div>
+    );
     return (<div
       className="comment-slot"
     >
       { commentData }
+      { delBtn }
       { commentContent }
     </div>);
   }
@@ -52,6 +65,7 @@ Comment.defaultProps = {
   slots: null,
   date: null,
   imageURL: null,
+  c_id: null,
 };
 
 Comment.propTypes = {
@@ -59,6 +73,8 @@ Comment.propTypes = {
   writer: PropTypes.string,
   date: PropTypes.string,
   imageURL: PropTypes.string,
+  deleteComment: PropTypes.func.isRequired,
+  c_id: PropTypes.number,
   // schoolSpecificInfo: SemesterlyPropTypes.schoolSpecificInfo.isRequired,
 };
 

@@ -38,7 +38,17 @@ class CommentView(APIView):
         except KeyError:
             return Response({'reason': 'unknown tbh', 'comment_added': [] }, status=404)
 
-"""
-    def put(self, request):
+    def delete(self, request, tt_id):
+        try:
+            timetable = PersonalTimetable.objects.get(school=request.subdomain, pk=tt_id)
+            # figure out how to make shit consistant!! bc cant just delete based on matching a string.
+            to_del_com = timetable.comments.get(message=request.data['comment_str'], id=request.data['comment_id'])
+            #ops are id, image_url, last_updated, message, owner, owner_id
 
-    def delete(self, request):"""
+            to_del_com.delete()
+            return Response({'comment_deleted': request.data['comment_str']}, status=200)
+        except KeyError:
+            return Response({'reason': 'Error finding comment to delete', 'comments': []}, status=500)
+
+    """
+    def put(self, request):"""
