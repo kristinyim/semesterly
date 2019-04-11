@@ -104,8 +104,16 @@ class AddAdvisorModal extends React.Component {
           style={{backgroundImage: `url(${advisor.img_url})`, margin: '5px', zIndex: '2' }}
         />
         <p> {advisor.userFirstName} {advisor.userLastName} - {advisor.email} </p>
+        <div className="row-button-comment">
+              <button className="row-button" onClick={()=>{
+                  // console.log("del clicked");
+                  this.props.fetchAdvisorRemoveLink(advisor.email);
+              }}>
+                  <i className="fa fa-trash-o" />
+              </button>
+        </div>
       </div>
-    )) : null;
+    )) : [];
     const modalContent = (this.props.hasCourses) ? (
       <div className="add-advisor-modal__container">
         <div className="search-bar__input-wrapper">
@@ -118,14 +126,15 @@ class AddAdvisorModal extends React.Component {
           />
           <button
             className="btn btn-primary"
-            style={{ marginLeft: 'auto', marginRight: '10%' }}
+            style={{ marginLeft: '5%', marginRight: '10%', padding: '5.5px 12px' }}
             onClick={() => this.startSearch()}
           >
           Search
         </button>
         <p>{ this.state.result }</p>
           <div className="existing-advisors">
-            <h3> Existing Advisors </h3>
+              {existingAdvisors.length > 0 ? <h3>Existing Advisors</h3> : <h3></h3>}
+
             { existingAdvisors }
           </div>
         </div>
@@ -157,6 +166,7 @@ AddAdvisorModal.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   fetchAdvisorLink: PropTypes.func.isRequired,
   fetchAdvisorListLink: PropTypes.func.isRequired,
+  fetchAdvisorRemoveLink: PropTypes.func.isRequired,
 };
 
 export default AddAdvisorModal;

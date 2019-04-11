@@ -41,10 +41,12 @@ export const acceptTOSEndpoint = () => '/tos/accept/';
 export const getAddAdvisorEndpoint = () => '/advisor/addAdvisor/';
 export const getAdvisingTimetablesEndpoint = semester => `/advisor/getAdvisingTimetables/${semester.name}/${semester.year}/`;
 export const getAdvisorEndpoint = (semester, ttId) => `/advisor/getAdvisor/${semester.name}/${semester.year}/${ttId}/`;
+export const getDeleteAdvisorEndpoint = (semester, ttId, email) => `/advisor/deleteAdvisorFromTT/${semester.name}/${semester.year}/${ttId}/${email}/`;
 export const getDeleteAdvisingTimetableEndpoint = (semester, name, email) => `/advisor/deleteAdvisor/${semester.name}/${semester.year}/${name}/${email}`;
 export const addCommentEndpoint = () => '/comments/addComment/';
 export const getCommentEndpoint = ttId => `/comments/getComments/${ttId}/`;
 export const getDeleteCommentEndpoint = ttId => `/comments/removeComment/${ttId}/`;
+export const getEditCommentEndpoint = ttId => `/comments/editComment/${ttId}/`;
 export function getCourseShareLinkFromModal(code, semester) {
   return `/course/${encodeURIComponent(code)}/${semester.name}/${semester.year}`;
 }

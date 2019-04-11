@@ -25,7 +25,7 @@ import {
     getAdvisingTimetablesEndpoint,
     addCommentEndpoint,
     getCommentEndpoint,
-    getDeleteCommentEndpoint, getDeleteTimetableEndpoint
+    getDeleteCommentEndpoint, getEditCommentEndpoint,
 } from '../constants/endpoints';
 import {
     browserSupportsLocalStorage,
@@ -178,10 +178,8 @@ export const addComment = content => (dispatch, getState) => {
     });
 };
 
-// PUT ACTION TO DELETE COMMENT
 export const deleteComment = content => (dispatch, getState) => {
   const state = getState();
-  console.log("action State for Del: ", state);
   const ttId = state.timetables.items[0].id;
   // you can get the tt_id here no need to have it in commentss
     fetch(getDeleteCommentEndpoint(ttId), {
@@ -195,13 +193,37 @@ export const deleteComment = content => (dispatch, getState) => {
         body: JSON.stringify({
             tt_id: state.timetables.items[0].id,
             comment_str: content.msg,
-            comment_writer: content.writer,
             comment_id: content.c_id,
         }),
     })
         .then(response => response.json())
         .then(() => {
           dispatch(getComment());
+        });
+};
+export const editComment = content => (dispatch, getState) => {
+    const state = getState();
+    //aconsole.log("action State for Edit: ", state);
+    const ttId = state.timetables.items[0].id;
+    // you can get the tt_id here no need to have it in commentss
+    fetch(getEditCommentEndpoint(ttId), {
+        headers: {
+            'X-CSRFToken': Cookie.get('csrftoken'),
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        method: 'PUT',
+        credentials: 'include',
+        body: JSON.stringify({
+            tt_id: state.timetables.items[0].id,
+            comment_str: content.new_msg,
+            comment_id: content.c_id,
+            old_msg: content.msg,
+        }),
+    })
+        .then(response => response.json())
+        .then(() => {
+            dispatch(getComment());
         });
 };
 

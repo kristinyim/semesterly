@@ -53,6 +53,32 @@ class AddAdvisorView(APIView):
         except KeyError:
             return Response({'reason': 'Incorrect request format', 'advisors_added': []}, status=404)
 
+    def delete(self, request, sem_name, year, ttId, advisor_email):
+                """ Deletes an advisor from a PersonalTimetable by name/year/term and advisor email."""
+                student = get_student(request)  # current authorized user
+                advisor_user_list = list(User.objects.filter(email=advisor_email))
+
+                if len(advisor_user_list) == 0:
+                    return Response({'reason': 'invalid advisro email'}, status=404)
+
+                advisor_list = [Student.objects.get(user=u) for u in advisor_user_list]
+
+                school = request.subdomain
+                semester = Semester.objects.get(name=sem_name, year=year)
+
+                removed = []
+                timetable = PersonalTimetable.objects.filter(
+                                        student=student, pk=ttId, school=school, semester=semester)
+                # account for multiple student emails for same account
+                for advisor in advisor_list:
+                    for tt in timetable:
+                        if advisor in tt.advisors.all():
+                            tt.advisors.remove(advisor)
+                            removed.append(tt)
+
+                return Response({'timetables': DisplayTimetableSerializer.from_model(removed, many=True).data},
+                                status=200)
+
 
 class RetrieveAdvisorView(APIView):
     def get(self, request, sem_name, year, tt_id):

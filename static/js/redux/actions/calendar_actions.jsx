@@ -22,6 +22,7 @@ import {
     getCourseShareLink,
     getAddAdvisorEndpoint,
     getAdvisorEndpoint,
+    getDeleteAdvisorEndpoint,
 } from '../constants/endpoints';
 import { FULL_WEEK_LIST } from '../constants/constants';
 import {
@@ -29,6 +30,7 @@ import {
   getActiveDenormTimetable,
   getActiveTimetable } from '../reducers/root_reducer';
 import * as ActionTypes from '../constants/actionTypes';
+import {getComment} from "./timetable_actions";
 
 const DAY_MAP = {
   M: 'mo',
@@ -144,6 +146,32 @@ export const fetchAdvisorListLink = () => (dispatch, getState) => {
       data,
     });
   });
+};
+
+export const fetchAdvisorRemoveLink = email => (dispatch, getState) => {
+    const state = getState();
+    console.log(state);
+    const semester = getCurrentSemester(state);
+    const timetableId = getActiveTimetable(state).id;
+    fetch(getDeleteAdvisorEndpoint(semester, timetableId, email), {
+        headers: {
+            'X-CSRFToken': Cookie.get('csrftoken'),
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        method: 'DELETE',
+        credentials: 'include',
+        body: JSON.stringify({
+            ttId: timetableId,
+            sem_name: semester.name,
+            sem_year: semester.year,
+            advisor_email: email,
+        }),
+    })
+        .then(response => response.json())
+        .then(() => {
+            dispatch(fetchAdvisorListLink());
+        });
 };
 
 export const addTTtoGCal = () => (dispatch, getState) => {

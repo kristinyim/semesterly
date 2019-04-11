@@ -36,12 +36,12 @@
   &:after {
     content: '';
     display: block;
-    width: 100px;
+    width: 130px;
     height: 80px;
     background: cadetblue;
     position: absolute;
-    -ms-transform: rotate(35deg) translate(-15px,35px); /* IE 9 */
-    -webkit-transform: rotate(35deg) translate(-15px,35px); /* Safari */
-    transform: rotate(35deg) translate(-15px,35px); /* Standard syntax */
+    -ms-transform: rotate(50deg) translate(-10px, 65px); /* IE 9 */
+    -webkit-transform:rotate(50deg) translate(-10px, 65px); /* Safari */
+    transform: rotate(50deg) translate(-10px, 65px); /* Standard syntax */
   }
 }

@@ -134,11 +134,14 @@ class SideBar extends React.Component {
       return (<Comment
         key={c.last_updated + c.message}
         content={c.message}
-        writer={c.ownerFirstName}
+        writerFirstName={c.ownerFirstName}
+        writerLastName={c.ownerLastName}
         date={c.last_updated}
         imageURL={c.image_url}
         deleteComment={this.props.deleteComment}
+        editComment={this.props.editComment}
         c_id={c.id}
+        editable={c.ownerFirstName == this.props.userFirstName && c.ownerLastName == this.props.userLastName}
       />);
     }) : null;
     let optionalSlots = this.props.coursesInTimetable ? this.props.optionalCourses.map((course) => {
@@ -301,8 +304,11 @@ SideBar.propTypes = {
   getShareLink: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
   deleteComment: PropTypes.func.isRequired,
+  editComment: PropTypes.func.isRequired,
   comments: PropTypes.arrayOf(SemesterlyPropTypes.comment).isRequired,
   tt_id: PropTypes.number.isRequired,
+  userFirstName: PropTypes.string.isRequired,
+  userLastName: PropTypes.string.isRequired,
 };
 
 export default SideBar;

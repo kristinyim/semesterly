@@ -32,6 +32,7 @@ import {
     loadTimetable,
     addComment,
     deleteComment,
+    editComment,
 } from '../../actions/timetable_actions';
 import { deleteTimetable, duplicateTimetable, deleteAdvisingTimetable } from '../../actions/user_actions';
 import { getCourseShareLink } from '../../constants/endpoints';
@@ -60,6 +61,8 @@ const mapStateToProps = (state) => {
     getShareLink: courseCode => getCourseShareLink(courseCode, getCurrentSemester(state)),
     comments: state.timetables.comments,
     tt_id: state.timetables.items[0].id !== undefined ? state.timetables.items[0].id : -1,
+    userFirstName: state.userInfo.data.userFirstName,
+    userLastName: state.userInfo.data.userLastName,
   };
 };
 
@@ -79,6 +82,7 @@ const SideBarContainer = connect(
     loadTimetable,
     addComment,
     deleteComment,
+    editComment
   },
 )(SideBar);
 

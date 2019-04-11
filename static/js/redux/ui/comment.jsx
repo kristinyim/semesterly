@@ -17,12 +17,35 @@ import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 import React from 'react';
 
 class Comment extends React.Component {
-  render() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            input: this.props.content,
+            content: '',
+        };
+        this.keyPress = this.keyPress.bind(this);
+    }
+
+    keyPress(e) {
+        if(e.key=='Enter') {
+            this.props.editComment({new_msg: this.state.input, c_id: this.props.c_id, msg: this.props.content });
+        }
+    }
+
+    render() {
     const parsedDate = new Date(this.props.date).toDateString();
     const parsedTime = new Date(this.props.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
     const commentContent = (
       <div className="comment-content">
-        <h3>{ this.props.content }</h3>
+        <input
+            type={"text"}
+            value={this.state.input}
+            onKeyPress={e => this.keyPress(e)}
+            onChange={e => this.setState({input: e.target.value})}
+            readOnly={!this.props.editable}
+         >
+
+        </input>
       </div>
     );
     const profilePic = (this.props.imageURL === '-1') ? null : (
@@ -34,7 +57,7 @@ class Comment extends React.Component {
     const commentData = (
       <div className="comment-user-data">
         <h4>{ profilePic }</h4>
-        <h2>{ this.props.writer }<br/>{parsedDate} at {parsedTime}</h2>
+        <h2>{ this.props.writerFirstName + " " + this.props.writerLastName }<br/>{parsedDate} at {parsedTime}</h2>
       </div>
     );
     const delBtn = (
@@ -42,7 +65,7 @@ class Comment extends React.Component {
         <div className="row-button-comment">
             <button className="row-button" onClick={()=>{
 
-              this.props.deleteComment({msg: this.props.content, writer: this.props.writer, c_id: this.props.c_id});
+              this.props.deleteComment({msg: this.props.content, c_id: this.props.c_id});
             }
             }>
                 <i className="fa fa-trash-o" />
@@ -52,8 +75,8 @@ class Comment extends React.Component {
     return (<div
       className="comment-slot"
     >
+      { this.props.editable ? delBtn : null }
       { commentData }
-      { delBtn }
       { commentContent }
     </div>);
   }
@@ -70,11 +93,15 @@ Comment.defaultProps = {
 
 Comment.propTypes = {
   content: PropTypes.string,
-  writer: PropTypes.string,
+  writerFirstName: PropTypes.string,
+  writerLastName: PropTypes.string,
   date: PropTypes.string,
   imageURL: PropTypes.string,
   deleteComment: PropTypes.func.isRequired,
+  editComment: PropTypes.func.isRequired,
   c_id: PropTypes.number,
+  userInfo: SemesterlyPropTypes.userInfo,
+  editable: PropTypes.bool.isRequired,
   // schoolSpecificInfo: SemesterlyPropTypes.schoolSpecificInfo.isRequired,
 };
 

@@ -8,8 +8,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # viewer management
     url(r'^comments/addComment/$', comments.views.CommentView.as_view()),
-    url(r'^comments/editComment/$', comments.views.CommentView.as_view()),
     url(r'^comments/getComments/(?P<tt_id>.+)/$',
                                comments.views.CommentView.as_view()),
     url(r'^comments/removeComment/(?P<tt_id>.+)/$', comments.views.CommentView.as_view()),
+    url(r'^comments/editComment/(?P<tt_id>.+)/$', comments.views.CommentView.as_view()),
 )

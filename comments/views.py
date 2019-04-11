@@ -41,14 +41,38 @@ class CommentView(APIView):
     def delete(self, request, tt_id):
         try:
             timetable = PersonalTimetable.objects.get(school=request.subdomain, pk=tt_id)
-            # figure out how to make shit consistant!! bc cant just delete based on matching a string.
-            to_del_com = timetable.comments.get(message=request.data['comment_str'], id=request.data['comment_id'])
+            owner = get_student(request)
+            # find the comment that matches message, id, and the person sending request
+            # (so that someone can't delete someone elses comment on a shared timetable)
+            to_del_com = timetable.comments.get(message=request.data['comment_str'], id=request.data['comment_id'], owner=owner.user)
             #ops are id, image_url, last_updated, message, owner, owner_id
 
             to_del_com.delete()
             return Response({'comment_deleted': request.data['comment_str']}, status=200)
+        except Comment.DoesNotExist:
+            return Response({'reason': 'Error finding comment to delete, make sure you are the original comment writer',
+             'comments': []}, status=404)
         except KeyError:
-            return Response({'reason': 'Error finding comment to delete', 'comments': []}, status=500)
+                    return Response({'reason': 'Error finding comment to delete', 'comments': []}, status=404)
 
-    """
-    def put(self, request):"""
+    def put(self, request, tt_id):
+        try:
+            timetable = PersonalTimetable.objects.get(school=request.subdomain, pk=tt_id)
+            owner = get_student(request)
+
+            # find the comment that matches id, and the person sending request
+            # (so that someone can't edit someone elses comment on a shared timetable)
+            # TODO: send old message so that you can retrieve the old comment
+            to_edit_com = timetable.comments.get(message=request.data['old_msg'],
+                id=request.data['comment_id'], owner=owner.user)
+
+            # update the message and .save() (should auto update the last updated field??)
+            to_edit_com.message = request.data['comment_str']
+            to_edit_com.save()
+
+            return Response({'comment_edited': request.data['comment_str']}, status=200)
+        except Comment.DoesNotExist:
+            return Response({'reason': 'Error finding comment to edit, make sure you are the original comment writer',
+             'comments': []}, status=404)
+        except KeyError:
+            return Response({'reason': 'Error finding comment to edit', 'comments': []}, status=404)
