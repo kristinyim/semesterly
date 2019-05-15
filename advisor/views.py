@@ -20,6 +20,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from timetable.models import Semester
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 
 
 class AddAdvisorView(APIView):
@@ -49,6 +50,9 @@ class AddAdvisorView(APIView):
                         return Response({'reason': 'Advisor already exists', 'advisors_added:': []}, status=404)
                     timetable.advisors.add(advisor_obj)
                     output.append(get_student_dict(school, advisor_obj, semester))
+
+            # send an email to the advisor notifying them that they've been added as an advisor to a timetable
+
             return Response({'advisors_added': output}, status=200)
         except KeyError:
             return Response({'reason': 'Incorrect request format', 'advisors_added': []}, status=404)
